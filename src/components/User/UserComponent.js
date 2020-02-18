@@ -4,22 +4,21 @@ import {
     BreadcrumbItem
 } from "reactstrap";
 import {Link} from "react-router-dom";
+import UserList from "./UserListComponent";
 
 function User() {
     return (
         <div className="container">
-            <div className="row">
-                <Breadcrumb>
-                    <BreadcrumbItem>
-                        <Link to="/home">Home</Link>
-                    </BreadcrumbItem>
-                    <BreadcrumbItem active>Groups</BreadcrumbItem>
-                </Breadcrumb>
+            
+            <div className="row" className="p-1 bg-light my-1">
+                
                 <div className="col-12">
-                    <h3>Groups</h3>
-                    <hr/>
+                <h2>Users List</h2>
+                    <UserList />
                 </div>
             </div>
+
+
         </div>
     );
 }
