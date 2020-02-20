@@ -19,7 +19,7 @@ class Main extends Component {
             <Container className="themed-container">
                 <Header/>
                 <Switch>
-                    <Route path="/home"
+                    <Route  exact path="/home"
                         component={Home}/>
                     <Route path="/groups"
                         component={Group}/>
