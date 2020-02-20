@@ -50,18 +50,7 @@ const USERS = [
                 "gender": "male",
                 "created_at": "2020-02-12 10:20:21",
                 "updated_at": "2020-02-12 10:20:21",
-                "groups": [
-                    {
-                        "id": 1,
-                        "name": "SL-PHPBackend-V2",
-                        "created_at": "2019-07-17 10:09:22",
-                        "updated_at": "2019-07-17 10:09:22",
-                        "pivot": {
-                            "user_id": 3,
-                            "group_id": 1
-                        }
-                    }
-                ]
+               
             },
             {
                 "id": 4,
