@@ -10,23 +10,22 @@ import {
     Col,
     Label,
     FormGroup,
-    Input
+    
 } from 'reactstrap';
 import Select from 'react-select';
-
-import USERS from '../../api/users';
 import GROUPS from '../../api/groups';
-
-const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-  ];
-
-function UserListItem({toggleModal}) {
+import { baseUrl } from "../../api/baseUrl";
 
 
-    const user_list = USERS.map(user => {
+function UserListItem({users,toggleModal}) {
+
+
+    if (users === null) {
+        return <h2>Loading users...</h2>;
+      }
+
+
+    const user_list = users.map(user => {
 
         return (
             <Media key={
@@ -77,7 +76,7 @@ class UserList extends React.Component {
         this.state = {
             isModalOpen: false,
             selectedOption: null,
-            options:null
+            users:null
         };
         this.toggleModal = this.toggleModal.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -109,9 +108,33 @@ class UserList extends React.Component {
         });
     }
 
-    handleSubmit(values) { // console.log("Current State is: " + JSON.stringify(values));
-   
-    }
+    handleSubmit(values) { 
+        console.log("Current State is: " + JSON.stringify(values));
+
+    }   
+
+    fetchUsers = () => {
+        return fetch(baseUrl + "users")
+          .then(
+            response => {
+              if (response.ok) {
+                return response;
+              } else {
+                var error = new Error(
+                  "Error " + response.status + ": " + response.statusText
+                );
+                error.response = response;
+                throw error;
+              }
+            },
+            error => {
+              var errmess = new Error(error.message);
+              throw errmess;
+            }
+          )
+          .then(response => response.json())
+          .catch(error =>    console.log("Current State is: " + error));
+      };
 
     handleChange = selectedOption => {
         this.setState(
@@ -121,19 +144,19 @@ class UserList extends React.Component {
       };
     
     componentDidMount() {
-        // handle the dynamic options
-    //    this.calculateSelectOptions();
+        this.fetchUsers().then(response => this.setState({ users: response}));       
      }
 
     render() {
-        const { selectedOption } = this.state;
+        const { selectedOption ,users} = this.state;
 
         return (
             <div>
                 <Media list>
-                    <UserListItem toggleModal={
-                        this.toggleModal
-                    }/>
+                    <UserListItem 
+                    toggleModal={this.toggleModal}
+                    users={users}
+                    />
                 </Media>
 
                 <div>
