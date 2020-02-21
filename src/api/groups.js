@@ -79,6 +79,22 @@ const GROUPS = [
                         }
                     }
                 ]
+            },
+            {
+                "id": 3,
+                "name": "Computer Science",
+                "created_at": "2020-02-12 10:21:02",
+                "updated_at": "2020-02-12 10:21:02",
+                "users": [
+                ]
+            },
+            {
+                "id": 4,
+                "name": "Electronics Engineering",
+                "created_at": "2020-02-12 10:21:02",
+                "updated_at": "2020-02-12 10:21:02",
+                "users": [
+                ]
             }
         ]
 

@@ -17,11 +17,11 @@ import Select from 'react-select';
 import USERS from '../../api/users';
 import GROUPS from '../../api/groups';
 
-// const options = [
-//     { value: 'chocolate', label: 'Chocolate' },
-//     { value: 'strawberry', label: 'Strawberry' },
-//     { value: 'vanilla', label: 'Vanilla' },
-//   ];
+const options = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' },
+  ];
 
 function UserListItem({toggleModal}) {
 
@@ -54,7 +54,8 @@ function UserListItem({toggleModal}) {
 
                         {
                         (!user.groups || !user.groups.length) ? <Button color="primary"
-                            onClick={() => toggleModal(user)}>Add to Group</Button> : user.length
+                            onClick={() => toggleModal(user)}>Add to Group</Button> :
+                             <Button color="primary" onClick={() => toggleModal(user)}>Add to other</Button> 
                     } </span>
                 </Media>
 
@@ -85,14 +86,23 @@ class UserList extends React.Component {
     toggleModal(user) {
 
         let myoptions = [];
-        myoptions = GROUPS.map(group => {
+        if(user.groups){
+              let filtered_group  = GROUPS.filter(function(array_el){
+                return user.groups.filter(function(anotherOne_el){
+                   return anotherOne_el.id == array_el.id;
+                }).length == 0
+             });
+             myoptions = filtered_group.map(function(group){
+                return  { label: group.name, value: group.id }  
+             });
+        }else{
 
-            return  { label: group.name, value: group.id }
+            myoptions = GROUPS.map(function(group){
+                return  { label: group.name, value: group.id }  
+             });
 
-        });
-     
-        console.log(myoptions);
-
+        }        
+      
         this.setState({
             isModalOpen: !this.state.isModalOpen,
             options : myoptions
@@ -145,10 +155,9 @@ class UserList extends React.Component {
                                         md={2}>Rating</Label>
                                     <Col md={10}>
                                         <FormGroup>
-                                            <Label for="exampleSelectMulti">Select Multiple</Label>
+                                            <Label for="exampleSelectMulti">Select Group</Label>
                                             <Select 
                                                 isMulti 
-
                                                 value={selectedOption}
                                                 onChange={this.handleChange}
                                                 options={this.state.options}
