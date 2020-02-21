@@ -12,8 +12,16 @@ import {
     FormGroup,
     Input
 } from 'reactstrap';
-import USERS from '../../api/users';
+import Select from 'react-select';
 
+import USERS from '../../api/users';
+import GROUPS from '../../api/groups';
+
+// const options = [
+//     { value: 'chocolate', label: 'Chocolate' },
+//     { value: 'strawberry', label: 'Strawberry' },
+//     { value: 'vanilla', label: 'Vanilla' },
+//   ];
 
 function UserListItem({toggleModal}) {
 
@@ -36,7 +44,7 @@ function UserListItem({toggleModal}) {
                         {
                         user.first_name
                     }</Media>
-                    <span class="d-block">
+                    <span className="d-block">
                         {
                         user.city
                     }
@@ -46,7 +54,7 @@ function UserListItem({toggleModal}) {
 
                         {
                         (!user.groups || !user.groups.length) ? <Button color="primary"
-                            onClick={toggleModal}>Add to Group</Button> : user.length
+                            onClick={() => toggleModal(user)}>Add to Group</Button> : user.length
                     } </span>
                 </Media>
 
@@ -66,21 +74,50 @@ class UserList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isModalOpen: false
+            isModalOpen: false,
+            selectedOption: null,
+            options:null
         };
         this.toggleModal = this.toggleModal.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        // this.calculateSelectOptions = this.calculateSelectOptions.bind(this);
     }
-    toggleModal() {
+    toggleModal(user) {
+
+        let myoptions = [];
+        myoptions = GROUPS.map(group => {
+
+            return  { label: group.name, value: group.id }
+
+        });
+     
+        console.log(myoptions);
+
         this.setState({
-            isModalOpen: !this.state.isModalOpen
+            isModalOpen: !this.state.isModalOpen,
+            options : myoptions
         });
     }
 
     handleSubmit(values) { // console.log("Current State is: " + JSON.stringify(values));
+   
     }
 
+    handleChange = selectedOption => {
+        this.setState(
+          { selectedOption },
+          () => console.log(`Option selected:`, this.state.selectedOption)
+        );
+      };
+    
+    componentDidMount() {
+        // handle the dynamic options
+    //    this.calculateSelectOptions();
+     }
+
     render() {
+        const { selectedOption } = this.state;
+
         return (
             <div>
                 <Media list>
@@ -109,14 +146,14 @@ class UserList extends React.Component {
                                     <Col md={10}>
                                         <FormGroup>
                                             <Label for="exampleSelectMulti">Select Multiple</Label>
-                                            <Input type="select" name="selectMulti" id="exampleSelectMulti" multiple>
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                            </Input>
-                                        </FormGroup>
+                                            <Select 
+                                                isMulti 
+
+                                                value={selectedOption}
+                                                onChange={this.handleChange}
+                                                options={this.state.options}
+                                            />
+                                          </FormGroup>
                                     </Col>
                                 </Row>
 
