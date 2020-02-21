@@ -86,12 +86,11 @@ class UserList extends React.Component {
 
         let myoptions = [];
         if(user.groups){
-              let filtered_group  = GROUPS.filter(function(group){
+            myoptions =  GROUPS.filter(function(group){
                 return user.groups.filter(function(user_group){
                    return user_group.id == group.id;
-                }).length == 0
-             });
-             myoptions = filtered_group.map(function(group){
+                }).length == false
+             }).map(function(group){
                 return  { label: group.name, value: group.id }  
              });
         }else{
