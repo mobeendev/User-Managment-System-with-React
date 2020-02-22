@@ -6,7 +6,6 @@ import User from "./User/UserComponent";
 import Group from "./Groups/GroupComponent";
 
 import { Switch, Route, Redirect } from "react-router-dom";
-import { Container } from "reactstrap";
 
 class Main extends Component {
     constructor(props) {
@@ -16,7 +15,7 @@ class Main extends Component {
     render() {
 
         return (
-            <Container className="themed-container">
+            <div className="">
                 <Header/>
                 <Switch>
                     <Route  exact path="/home"
@@ -29,7 +28,7 @@ class Main extends Component {
                 </Switch>
                 <Footer/>
 
-            </Container>
+            </div>
         );
     }
 }

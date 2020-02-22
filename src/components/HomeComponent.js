@@ -13,15 +13,19 @@ import {
 function Home(props) {
     return (
         <React.Fragment>
-            <Jumbotron fluid>
-                <Container fluid>
-                    <h1 className="display-3">Fluid jumbotron</h1>
-                    <p className="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
-                </Container>
-            </Jumbotron>
+                   <Jumbotron>
+                    <div className="container">
+                        <div className="row row-header">
+                            <div className="col-12 col-sm-6">
+                                <h1>Ristorante con Fusion</h1>
+                                <p>We take inspiration from the World's best cuisines, and create a unique fusion experience. Our lipsmacking creations will tickle your culinary senses!</p>
+                            </div>
+                        </div>
+                    </div>
+                </Jumbotron>
 
-            <Container fluid>
-                <Row className="p-1   bg-light my-1 rounded">
+            <Container>
+                <Row className="p-1   bg-light my-1">
                     <Col>
                         <Card body>
                             <CardTitle>
